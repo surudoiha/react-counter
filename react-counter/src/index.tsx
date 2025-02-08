@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client'; 
 
 const App = () => {
   const [count, setCount] = useState(300);
+
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.code === "Space") {
+        setCount((prevCount) => prevCount + 1); 
+      } else if (event.ctrlKey) {
+        setCount((prevCount) => prevCount - 1);
+      }
+    };
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []);
 
   return (
     <div style={{
